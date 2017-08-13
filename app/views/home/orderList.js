@@ -22,7 +22,7 @@ class videoPlayer extends Component {
                 apiKey: 'AIzaSyBfaalvZeERdvx7PGDdoxi_WtbFNISxYJg', // Your YouTube Developer API Key
                 videoId: '9aJVr5tTTWk', // YouTube video ID
                 autoplay: true, // Autoplay the video
-                startTime: 120, // Starting point of video (in seconds)
+                lightboxMode: true
             })
             .then(() => console.log('Standalone Player Exited'))
             .catch(errorMessage => console.error(errorMessage))
