@@ -5,7 +5,7 @@ import { TabNavigator, StackNavigator, DrawerNavigator, DrawerItems } from 'reac
 import { Button, Icon } from 'react-native-elements'
 
 import HomeTab from './views/home/HomePage';
-import videoPlayer from './views/home/orderList';
+import videoPlayer from './views/home/PlayVideo';
 
 import MyProfilePage from './views/myProfile/ProfilePage';
 import LoginScreen from './views/login/LoginScreen';
@@ -68,7 +68,7 @@ const MyApp = StackNavigator(
 {
   MainScene: {
     screen: HomeTab,
-    path: '/home',
+    path: '/',
     navigationOptions: ({ navigation }) => ({
       headerStyle: {backgroundColor: '#E7272D'},
       headerTintColor: '#fff',
@@ -89,7 +89,7 @@ const MyApp = StackNavigator(
   },
   videoPlayer: {
     screen: videoPlayer,
-    path: '/login',
+    path: '/play',
     navigationOptions: () => ({
       headerStyle: {backgroundColor: '#E7272D'},
       headerTintColor: '#fff',
@@ -99,10 +99,8 @@ const MyApp = StackNavigator(
           size={30}
           type="font-awesome"
           style={{ paddingLeft: 10 }}
-          onPress={() => navigation.navigate('DrawerOpen')}
         />
-      ),
-      header:null,
+      )
     })
   },
 },

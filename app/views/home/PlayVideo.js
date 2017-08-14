@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, FlatList, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, Image, FlatList, ScrollView, StyleSheet, WebView } from 'react-native';
 import { Card, ListItem, Button } from 'react-native-elements';
 import { YouTubeStandaloneAndroid } from 'react-native-youtube';
 
@@ -14,7 +14,7 @@ class videoPlayer extends Component {
     }
 
     componentDidMount() {
-        this.playVideo();
+        // this.playVideo();
     }
 
     playVideo() {
@@ -31,7 +31,9 @@ class videoPlayer extends Component {
     render() {
         return ( 
           <ScrollView >
-            
+            <WebView 
+            style={{height: 300}}
+            source={{ html: "<html><body>Look Ma' a video! <br /> <iframe width=\"320\" height=\"300\" src=\"https://www.youtube.com/embed/9aJVr5tTTWk\" frameborder=\"0\" allowfullscreen></iframe></body></html>" }} />
           </ScrollView>
         );
     }
