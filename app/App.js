@@ -5,7 +5,7 @@ import { TabNavigator, StackNavigator, DrawerNavigator, DrawerItems } from 'reac
 import { Button, Icon } from 'react-native-elements'
 
 import HomeTab from './views/home/HomePage';
-import videoPlayer from './views/home/PlayVideo';
+import Player from './views/home/PlayVideo';
 
 import MyProfilePage from './views/myProfile/ProfilePage';
 import LoginScreen from './views/login/LoginScreen';
@@ -88,7 +88,7 @@ const MyApp = StackNavigator(
     }),
   },
   videoPlayer: {
-    screen: videoPlayer,
+    screen: Player,
     path: '/play',
     navigationOptions: () => ({
       headerStyle: {backgroundColor: '#E7272D'},
@@ -132,9 +132,9 @@ const MainRoot = DrawerNavigator(
       path: '/home',
       screen: MyApp,
     },
-    SwipeDecker: {
+    Player: {
       path: '/swiper_decker',
-      screen: HomeScreen,
+      screen: Player,
     },
     Ratings: {
       path: '/ratings',
