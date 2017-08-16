@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableHighlight, FlatList, Dimensions } from 'react-native';
 import { Card, ListItem, Button } from 'react-native-elements';
-import YouTube, { YouTubeStandaloneAndroid } from 'react-native-youtube';
+// import YouTube, { YouTubeStandaloneAndroid } from 'react-native-youtube';
+import YouTube from '../../YouTube';
+
 import Video from 'react-native-video';
 import VideoPlayer from 'react-native-video-player';
 
@@ -38,16 +40,16 @@ class PlayVideo extends Component {
         this.playlistItems();
     }
 
-    playVideo() {
-        YouTubeStandaloneAndroid.playVideo({
-                apiKey: 'AIzaSyAfqO7vC4TOtn81Hn3mJ6nZMateFmq5ODg', // Your YouTube Developer API Key
-                videoId: '9aJVr5tTTWk', // YouTube video ID
-                autoplay: true, // Autoplay the video
-                lightboxMode: true
-            })
-            .then(() => console.log('Standalone Player Exited'))
-            .catch(errorMessage => console.error(errorMessage))
-    }
+    // playVideo() {
+    //     YouTubeStandaloneAndroid.playVideo({
+    //             apiKey: 'AIzaSyAfqO7vC4TOtn81Hn3mJ6nZMateFmq5ODg', // Your YouTube Developer API Key
+    //             videoId: '9aJVr5tTTWk', // YouTube video ID
+    //             autoplay: true, // Autoplay the video
+    //             lightboxMode: true
+    //         })
+    //         .then(() => console.log('Standalone Player Exited'))
+    //         .catch(errorMessage => console.error(errorMessage))
+    // }
 
 //   componentDidMount() {
 //     global.fetch(`https://player.vimeo.com/video/${VIMEO_ID}/config`)
