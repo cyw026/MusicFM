@@ -1,14 +1,19 @@
 package com.inprogress.reactnativeyoutube;
 
+import android.content.pm.ActivityInfo;
 import android.support.annotation.Nullable;
 
 import com.facebook.infer.annotation.Assertions;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.pierfrancescosoffritti.youtubeplayer.YouTubePlayerView;
 import com.pierfrancescosoffritti.youtubeplayer.AbstractYouTubeListener;
 import com.pierfrancescosoffritti.youtubeplayer.YouTubePlayerFullScreenListener;
@@ -29,7 +34,7 @@ public class YouTubeManager extends SimpleViewManager<YouTubePlayerView> {
     }
 
     @Override
-    protected YouTubePlayerView createViewInstance(ThemedReactContext themedReactContext) {
+    protected YouTubePlayerView createViewInstance(final ThemedReactContext themedReactContext) {
         final YouTubePlayerView playerView= new YouTubePlayerView(themedReactContext);
         playerView.initialize(new AbstractYouTubeListener() {
             @Override
@@ -37,6 +42,17 @@ public class YouTubeManager extends SimpleViewManager<YouTubePlayerView> {
                 playerView.loadVideo("9aJVr5tTTWk", 0);
             }
         }, true);
+        playerView.addFullScreenListener(new YouTubePlayerFullScreenListener() {
+            @Override
+            public void onYouTubePlayerEnterFullScreen() {
+                didChangeToFullscreen(playerView, true);
+            }
+
+            @Override
+            public void onYouTubePlayerExitFullScreen() {
+                didChangeToFullscreen(playerView, false);
+            }
+        });
 
         return playerView;
     }
@@ -134,14 +150,6 @@ public class YouTubeManager extends SimpleViewManager<YouTubePlayerView> {
 
     @ReactProp(name = "play")
     public void setPropPlay(final YouTubePlayerView view, @Nullable boolean param) {
-//        view.initialize(new AbstractYouTubeListener() {
-//            @Override
-//            public void onReady() {
-//                view.loadVideo("9aJVr5tTTWk", 0);
-//            }
-//        }, true);
-
-//        view.setPlay(param);
         view.playVideo();
     }
 
@@ -162,6 +170,14 @@ public class YouTubeManager extends SimpleViewManager<YouTubePlayerView> {
 
     @ReactProp(name = "showFullscreenButton")
     public void setPropShowFullscreenButton(YouTubePlayerView view, @Nullable boolean param) {
-//        view.setShowFullscreenButton(param);
+        view.showFullScreenButton(param);
+    }
+
+    public void didChangeToFullscreen(YouTubePlayerView view, boolean isFullscreen) {
+        WritableMap event = Arguments.createMap();
+        ReactContext reactContext = (ReactContext) view.getContext();
+        event.putBoolean("isFullscreen", isFullscreen);
+        event.putInt("target", view.getId());
+        reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(view.getId(), "fullscreen", event);
     }
 }

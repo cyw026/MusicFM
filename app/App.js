@@ -100,7 +100,8 @@ const MyApp = StackNavigator(
           type="font-awesome"
           style={{ paddingLeft: 10 }}
         />
-      )
+      ),
+      header: null
     })
   },
 },

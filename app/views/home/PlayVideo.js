@@ -5,6 +5,8 @@ import YouTube, { YouTubeStandaloneAndroid } from 'react-native-youtube';
 import Video from 'react-native-video';
 import VideoPlayer from 'react-native-video-player';
 
+const SCREEN_WIDTH = Dimensions.get('window').width
+const SCREEN_HEIGHT = Dimensions.get('window').height
 const VIMEO_ID = '179859217';
 import colors from 'HSColors'
 import { observer, inject } from 'mobx-react'
@@ -20,6 +22,7 @@ class PlayVideo extends Component {
         videoUrl: undefined,
         isReady: false,
         isPlay:false,
+        isFullscreen: false,
         items: {}
         };
     }
@@ -100,14 +103,14 @@ renderRow (item) {
     )
   }
   render() {
-      const {isPlay, items} = this.state;
+      const {isPlay, isFullscreen, items} = this.state;
     return (
       <View >
           <YouTube
             apiKey='AIzaSyAfqO7vC4TOtn81Hn3mJ6nZMateFmq5ODg'
             videoId="9aJVr5tTTWk"   // The YouTube video ID 
             play={isPlay}             // control playback of video with true/false 
-            fullscreen={true}       // control whether the video should play in fullscreen or inline 
+            fullscreen={isFullscreen}       // control whether the video should play in fullscreen or inline 
             loop={true}             // control whether the video should loop when ended 
             
             onReady={e => this.setState({ 
@@ -116,9 +119,13 @@ renderRow (item) {
                 })}
             onChangeState={e => this.setState({ status: e.state })}
             onChangeQuality={e => this.setState({ quality: e.quality })}
+            onChangeFullscreen={e => {
+                console.log(e)
+                this.setState({ isFullscreen: e.isFullscreen })
+            }}
             onError={e => this.setState({ error: e.error })}
             
-            style={{ alignSelf: 'stretch', height: 200 }}
+            style={isFullscreen ? styles.fullscreen : styles.lightboxMode}
             />
 
         <FlatList
@@ -141,6 +148,16 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 0,
         borderColor: '#fff',
+    },
+    fullscreen: {
+        alignSelf: 'stretch',
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
+    },
+    lightboxMode:{
+        alignSelf: 'stretch',
+        height: SCREEN_WIDTH,
+        width:SCREEN_HEIGHT
     },
     backgroundVideo: {
     backgroundColor: '#fff'
